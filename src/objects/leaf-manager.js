@@ -4,11 +4,11 @@ import Leaf from './leaf'
 let leafMatrix = new THREE.Matrix4()
 
 let quat = new THREE.Quaternion()
-quat.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Config.LEAF_ROT * 2)
+quat.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Config.LEAF_ROT)
 
 leafMatrix.compose(
 	new THREE.Vector3(0, Config.LEAF_Y, 0),
-	new THREE.Quaternion(),
+	quat,
 	new THREE.Vector3(Config.LEAF_SCALE, Config.LEAF_SCALE, Config.LEAF_SCALE)
 )
 

@@ -5,11 +5,12 @@ let md = new MobileDetect(window.navigator.userAgent)
 let Config = {
 
 	CAMERA_OFFSET_Y: 0,
+	CAMERA_ROT: -15 / 180 * Math.PI,
 
 	// leaf
 	LEAF_SCALE: 0.8,
 	LEAF_Y: 6,
-	LEAF_ROT: -15 / 180 * Math.PI,
+	LEAF_ROT: 30 / 180 * Math.PI,
 
 	LEAF_OFFSET_Y: 7,
 

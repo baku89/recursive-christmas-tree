@@ -57,7 +57,7 @@ class CameraRig extends THREE.Group {
 
 	lift() {
 		this.targetY += this.stepY
-		this.targetRot += 0//Config.LEAF_ROT
+		this.targetRot += Config.CAMERA_ROT
 		this.targetZoom *= Config.LEAF_SCALE_INV
 
 		this.stepY *= Config.LEAF_SCALE
@@ -70,6 +70,7 @@ class CameraRig extends THREE.Group {
 		this.targetZoom = 1
 
 		this.position.y = this.targetY
+		this.rotation.y = 0
 
 		this.camera.zoom = 1
 		this.camera.updateProjectionMatrix()
