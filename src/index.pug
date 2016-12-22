@@ -1,0 +1,33 @@
+doctype html
+html
+	head
+		include ./pug/meta.pug
+
+	body
+		.loading
+			#loading__bar.loading__bar
+
+		.canvas-wrapper
+			canvas.canvas
+
+		.about__bg
+
+		.instruction
+			| Press any key
+
+		button.about__button
+			span.wrapper
+				span.panel
+					span.x.x--a
+					span.x.x--b
+				span.panel ?
+
+		.about__content
+
+			p Click or Press Any Keys
+
+			p.credit
+				| Made by&nbsp;
+				a(href='http://baku89.com' target='_blank') Baku Hashimoto
+
+		script(src='./js/index.js')

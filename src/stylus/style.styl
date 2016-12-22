@@ -1,0 +1,275 @@
+@import 'nib'
+
+notext()
+	white-space nowrap
+	text-indent -9999px
+	overflow hidden
+
+uniform-centerize()
+	display flex
+	flex-direction column
+	justify-content center
+
+global-reset()
+
+mobile()
+	@media only screen and (max-width: 460px)
+		{block}
+
+.mq
+	font-family 'pc'
+	+mobile()
+		font-family 'mobile'
+
+$c-bg = #f7fbfd
+$c-blue = #5200ff
+$c-invert = #d4b56f
+$easing = cubic-bezier(.27,0,.08,1)
+
+//--------------------------------------------------
+*, ::after, ::before
+	box-sizing: border-box
+	outline none
+
+::selection,
+::-moz-selection,
+::-webkit-selection
+	background white
+
+a
+	text-decoration:none;
+	border-bottom 1px dashed white
+
+	&:link, &:visited
+		color $c-blue
+
+	&:hover
+		color white
+		background $c-blue
+
+//--------------------------------------------------
+html, body
+	width 100%
+	height 100%
+	overflow hidden
+	overflow-x hidden
+	overflow-y hidden
+
+html
+	font-family: 'Cormorant Garamond', serif
+	font-style italic
+	// font-family 'Cabin', sans-serif
+	font-smoothing antialiased
+	-moz-osx-font-smoothing grayscale
+	font-size 10px
+	// font-smoothing none
+	// -moz-osx-font-smoothing none
+
+	+mobile()
+		font-size 6px
+
+body
+	// font-size 1.6rem
+	position relative
+	background-color $c-bg
+	line-height 1.2
+	color $c-blue
+
+button
+	font-family inherit
+	border 0
+	background transparent
+	cursor pointer
+	padding 0
+	margin 0
+	// -webkit-appearance none
+
+//--------------------------------------------------
+// canvas
+
+.canvas-wrapper
+	top 0
+	right 0
+	bottom 0
+	left 0
+	overflow hidden
+
+.canvas
+	width 100%
+	height 100%
+	opacity 0
+	
+	transition opacity .1s cubic-bezier(.33,0,.46,1)
+	
+	&.show
+		opacity 1
+
+//--------------------------------------------------
+// page component
+	p
+		text-align center
+
+	a
+		&:link, &:visited
+			color white
+
+		&:hover, &:focus
+			color $c-blue
+			background-color white
+
+//--------------------------------------------------
+// about
+
+.loading
+	position absolute
+	top 50%
+	left 50%
+	width 120px
+	height 12px
+	margin-left -60px
+	transition opacity .5s cubic-bezier(.33,0,.46,1)
+	
+	&.hide
+		opacity 0
+
+.loading__bar
+	position absolute
+	top 0
+	left 0
+	width 0%
+	height 100%
+	transform-origin top left
+	background-color $c-blue
+	transition width .8s cubic-bezier(.33,0,.46,1)
+	
+//--------------------------------------------------
+// about
+
+.about
+	position absolute
+	top 0
+	left 0
+	right 0
+	bottom 0
+	z-index 20
+
+.about__button
+	position absolute
+	top 2.4rem
+	right 2.4rem
+	width 48px !important
+	height 48px !important
+	line-height 48px
+	z-index 10
+	font-size 3.6rem
+	color $c-invert
+	mix-blend-mode exclusion
+	border 1px dashed transparent
+	border-radius 50%
+	// background red
+	transition border-color .2s ease
+	overflow hidden
+
+	&:hover
+		border-color $c-invert
+
+		.show-about &
+		.wrapper
+			transform translateY(0)
+
+	span
+		display block
+
+	.wrapper
+		position absolute
+		top 0
+		left 0
+		width 100%
+		height 100%
+		transition transform .5s $easing
+		transform translateY(-100%)
+
+	.panel
+		position relative
+		width 100%
+		height 100%
+
+	.x
+		position absolute
+		left 20%
+		top 50%
+		width 60%
+		height: 1px
+		background-color $c-invert
+
+	.x--a
+		transform rotate(45deg)
+
+	.x--b
+		transform rotate(-45deg)
+
+.about__bg
+	position absolute
+	top -5%
+	left 0
+	right 0
+	bottom -5%
+	transition all .5s $easing 0s, visibility 0s linear 0.5s
+	visibility hidden
+	opacity 0
+	background-color $c-invert
+	mix-blend-mode exclusion
+
+	.show-about &
+		transform none
+		opacity 1
+		visibility: visible
+		transition all .5s $easing 0s, visibility 0s linear 0s
+
+.about__content
+	position absolute
+	top 0
+	left 0
+	right 0
+	bottom 0
+	transition all .5s $easing 0s, visibility 0s linear 0.5s
+	transform translateY(-3%)
+	visibility: hidden
+	color white
+	opacity 0
+	line-height 2
+	display flex
+	flex-direction column
+	justify-content center
+	font-size 2.4rem
+
+	.show-about &
+		transform none
+		opacity 1
+		visibility: visible
+		transition all .5s $easing 0s, visibility 0s linear 0s
+
+//--------------------------------------------------
+// instruction
+
+.instruction
+	position absolute
+	z-index 100
+	top 67%
+	left 50%
+	font-size 2.6rem
+	text-align center
+	width 7em
+	height 2em
+	line-height 1.8em
+	color $c-invert
+	margin 1em 0 0 -3.5em
+	mix-blend-mode exclusion
+	border 1px dashed $c-invert
+	border-radius 7px
+	transition opacity .5s $easing
+	opacity 0
+	
+	&.show
+		opacity 1
+
