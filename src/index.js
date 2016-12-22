@@ -17,7 +17,7 @@ function load() {
 	let $bar = document.getElementById('loading__bar')
 
 	loader.on('progress', (loaded) => {
-		console.log('loaded', loaded)
+		// console.log('loaded', loaded)
 
 		// update progress
 		$bar.style.width = `${loaded * 100}%`

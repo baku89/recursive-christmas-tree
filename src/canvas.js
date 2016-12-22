@@ -24,6 +24,11 @@ export default class Canvas {
 			$('.canvas').addClass('show')
 		})
 
+		// controller
+		controller.on('first-reset', () => {
+			this.scene.remove(this.ground)
+		})
+
 		// start frame
 		this.render = this.render.bind(this)
 		this.render()

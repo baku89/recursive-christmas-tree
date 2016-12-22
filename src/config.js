@@ -2,7 +2,7 @@ import MobileDetect from 'mobile-detect'
 
 let md = new MobileDetect(window.navigator.userAgent)
 
-window.Config = {
+let Config = {
 
 	CAMERA_OFFSET_Y: 0,
 
@@ -26,3 +26,7 @@ window.Config = {
 	FILL_LIGHT: 0x6536FF
 
 }
+
+Config.LEAF_SCALE_INV = 1 / Config.LEAF_SCALE
+
+window.Config = Config

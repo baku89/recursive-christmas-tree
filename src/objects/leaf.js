@@ -10,5 +10,7 @@ export default class Leaf extends THREE.Group {
 		super()
 
 		this.add(treeMesh.clone())
+
+		// this.add(new THREE.AxisHelper(30))
 	}
 }

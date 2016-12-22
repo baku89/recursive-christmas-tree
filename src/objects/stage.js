@@ -20,8 +20,8 @@ class Stage extends THREE.Group {
 		// plate
 		{
 			let geom = assets.obj.ground.children[1].geometry
-			this.stage = new THREE.Mesh(geom, surfaceMat)
-			this.add(this.stage)
+			this.plate = new THREE.Mesh(geom, surfaceMat)
+			this.add(this.plate)
 		}
 
 		// stem
@@ -49,7 +49,7 @@ class Stage extends THREE.Group {
 				.easing(TWEEN.Easing.Quadratic.Out)
 
 			new TWEEN.Tween(this.position)
-				.to({y: -34}, 2000)
+				.to({y: -40}, 2000)
 				.easing(TWEEN.Easing.Quadratic.In)
 				.onComplete(() => {
 					this.leafManager.visible = true
@@ -57,6 +57,11 @@ class Stage extends THREE.Group {
 					tw2.start()
 				})
 				.start()
+		})
+
+		// delete
+		controller.on('first-reset', () => {
+			this.remove(this.plate, this.stem)
 		})
 	}
 }

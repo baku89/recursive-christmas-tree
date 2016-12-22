@@ -8,7 +8,7 @@ quat.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Config.LEAF_ROT * 2)
 
 leafMatrix.compose(
 	new THREE.Vector3(0, Config.LEAF_Y, 0),
-	quat,
+	new THREE.Quaternion(),
 	new THREE.Vector3(Config.LEAF_SCALE, Config.LEAF_SCALE, Config.LEAF_SCALE)
 )
 
@@ -18,34 +18,50 @@ class LeafManager extends THREE.Group {
 		super()
 		this.visible = false
 
-		this.lastMatrix = new THREE.Matrix4()
+		this.newMatrix = new THREE.Matrix4()
 
 		this.addInitialLeaves()
 
 		controller.on('tap', this.addLeaf.bind(this))
+		controller.on('reset', this.reset.bind(this))
 	}
 
 	addInitialLeaves() {
 
-		// fadd initial leaves
-		for (let i = 0; i < 4; i++) {
-			let leaf = new Leaf()
-			leaf.applyMatrix(this.lastMatrix)
-			this.add(leaf)
+		// add initial leaves
+		let leaf
 
-			this.lastMatrix.multiply(leafMatrix)
+		for (let i = 0; i < 4; i++) {
+			leaf = new Leaf()
+			leaf.applyMatrix(this.newMatrix)
+			this.add(leaf)
+			this.newMatrix.multiply(leafMatrix)
 		}
+
+		this.originalMatrix = leaf.matrix.clone()
+		console.log(this.originalMatrix.elements)
 	}
 
 	addLeaf() {
+		console.log(this.originalMatrix.elements)
 
 		let leaf = new Leaf()
-		leaf.applyMatrix(this.lastMatrix)
+		leaf.applyMatrix(this.newMatrix)
 		this.add(leaf)
 
-		console.log('leaf', leaf.position.y)
+		this.newMatrix.multiply(leafMatrix)
+	}
 
-		this.lastMatrix.multiply(leafMatrix)
+	reset() {
+
+		let resetMat = new THREE.Matrix4().getInverse(this.newMatrix)
+		resetMat = resetMat.multiply(this.originalMatrix)
+
+		this.children.forEach((leaf) => {
+			leaf.applyMatrix(resetMat)
+		})
+
+		this.newMatrix = this.originalMatrix.clone()
 	}
 }
 

@@ -3,7 +3,7 @@ import EventEmitter from 'eventemitter3'
 let w = 100
 let h = 100
 
-let lerpIntensity = .2
+let lerpIntensity = .15
 
 class CameraRig extends THREE.Group {
 
@@ -19,6 +19,8 @@ class CameraRig extends THREE.Group {
 		this.camera.matrixAutoUpdate = false
 		this.camera.updateMatrix()
 		this.add(this.camera)
+
+		// this.add(new THREE.AxisHelper(20))
 
 		// light
 		{
@@ -37,8 +39,8 @@ class CameraRig extends THREE.Group {
 		this.stepY = Config.LEAF_Y
 		this.position.y = Config.LEAF_OFFSET_Y
 		this.targetY = this.position.y
-		this.targetRot = this.rotation.y
-		this.targetZoom = this.camera.zoom
+		this.targetRot = 0
+		this.targetZoom = 1
 
 		// offset 4
 		for (let i = 0; i < 4; i++) {
@@ -48,14 +50,31 @@ class CameraRig extends THREE.Group {
 
 		this.position.y = this.targetY
 		this.camera.updateProjectionMatrix()
+		this.initialStepY = this.stepY
+		this.initialTargetY = this.targetY
+		controller.on('reset', this.reset.bind(this))
 	}
 
 	lift() {
 		this.targetY += this.stepY
-		this.targetRot += Config.LEAF_ROT
-		this.targetZoom *= 1.25
+		this.targetRot += 0//Config.LEAF_ROT
+		this.targetZoom *= Config.LEAF_SCALE_INV
 
 		this.stepY *= Config.LEAF_SCALE
+	}
+
+	reset() {
+		this.stepY = this.initialStepY
+		this.targetY = this.initialTargetY
+		this.targetRot = 0
+		this.targetZoom = 1
+
+		this.position.y = this.targetY
+
+		this.camera.zoom = 1
+		this.camera.updateProjectionMatrix()
+
+
 	}
 
 	update() {

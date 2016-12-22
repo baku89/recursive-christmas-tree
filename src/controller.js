@@ -35,6 +35,7 @@ class Controller extends EventEmitter {
 		super()
 
 		this.notPressed = true
+		this.notReset = true
 		this.currentNote = 0
 
 		timeline.on('start-grow', this.start.bind(this))
@@ -53,10 +54,6 @@ class Controller extends EventEmitter {
 
 		let type = 0
 
-		if (this.notPressed) {
-			this.emit('first-tap')
-		}
-
 		// play
 		let ppc = new createjs.PlayPropsConfig().set({
 			startTime: rythm[this.currentNote].offset,
@@ -64,8 +61,12 @@ class Controller extends EventEmitter {
 		})
 		Sound.play('jingle-bell', ppc)
 
-
-		if (resetNote.indexOf(this.currentNote) != -1) {
+		if (!this.notPressed && resetNote.indexOf(this.currentNote) != -1) {
+			if (this.notReset) {
+				console.log('first-reset!')
+				this.emit('first-reset')
+				this.notReset = false
+			}
 			console.log('reset!')
 			this.emit('reset')
 		}
@@ -73,6 +74,11 @@ class Controller extends EventEmitter {
 		this.currentNote = (this.currentNote + 1) % rythm.length
  
 		this.emit('tap', type)
+
+		if (this.notPressed) {
+			this.emit('first-tap')
+			this.notPressed = false
+		}
 	}
 }
 

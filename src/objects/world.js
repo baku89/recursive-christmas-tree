@@ -1,11 +1,11 @@
-class World extends THREE.Object3D {
+class World extends THREE.Group {
 
 	constructor() {
 		super()
 
 		{
 			// debug
-			// this.scene.add(new THREE.GridHelper(200, 10))
+			// this.add(new THREE.GridHelper(200, 10))
 			// this.add(new THREE.AxisHelper(70))
 		}
 	}
