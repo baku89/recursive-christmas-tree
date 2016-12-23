@@ -86,6 +86,13 @@ class LeafManager extends THREE.Group {
 		let resetMat = new THREE.Matrix4().getInverse(this.newMatrix)
 		resetMat = resetMat.multiply(this.originalMatrix)
 
+		let pos = new THREE.Vector3()
+		let quat = new THREE.Quaternion()
+		let scale = new THREE.Vector3()
+
+		resetMat.decompose(pos, quat, scale)
+		resetMat.compose(pos, new THREE.Quaternion(), scale)
+		
 		this.children.forEach((leaf) => {
 			leaf.applyMatrix(resetMat)
 		})

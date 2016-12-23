@@ -16,8 +16,7 @@ class CameraRig extends THREE.Group {
 		this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 2000)
 		this.camera.position.set(600, 300, 600)
 		this.camera.lookAt(new THREE.Vector3(0, 0, 0))
-		this.camera.matrixAutoUpdate = false
-		this.camera.updateMatrix()
+		// this.camera.position.y = -2
 		this.add(this.camera)
 
 		// this.add(new THREE.AxisHelper(20))
@@ -64,18 +63,17 @@ class CameraRig extends THREE.Group {
 	}
 
 	reset() {
+		let rot = this.rotation.y * -1
+		console.log('camera', rot)
+
 		this.stepY = this.initialStepY
 		this.targetY = this.initialTargetY
-		this.targetRot = 0
 		this.targetZoom = 1
 
 		this.position.y = this.targetY
-		this.rotation.y = 0
 
 		this.camera.zoom = 1
 		this.camera.updateProjectionMatrix()
-
-
 	}
 
 	update() {

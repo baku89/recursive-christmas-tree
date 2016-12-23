@@ -25,5 +25,7 @@ export default class Leaf extends THREE.Group {
 			.start()
 
 		this.add(this.tree)
+
+		// this.add(new THREE.AxisHelper(20))
 	}
 }
