@@ -3,13 +3,15 @@ import { device_pixel_ratio } from 'javascript-retina-detect'
 
 import './gl'
 
+import ChromaticAberration from './post-effects/chromatic-aberration'
+
 export default class Canvas {
 
 	constructor() {
 
 		// initialization
 		this.initScene()
-		this.initPass()
+		this.initPostprocessing()
 		this.initController()
 		this.resizeCanvas()
 
@@ -56,37 +58,19 @@ export default class Canvas {
 		gl.renderer.setPixelRatio(device_pixel_ratio())
 	}
 
-	initPass() {
+	initPostprocessing() {
 
 		this.renderPass = new THREE.RenderPass(this.scene, this.cameraRig.camera)
 
-		this.depthMaterial = new THREE.MeshDepthMaterial()
-		this.depthMaterial.depthPacking = THREE.RGBADepthPacking
-		this.depthMaterial.blending = THREE.NoBlending
-
-		let params = {
-			minFilter: THREE.LinearFilter,
-			magFilter: THREE.LinearFilter
-		}
-		this.depthRenderTarget = new THREE.WebGLRenderTarget(
-			window.innerWidth, window.innerHeight, params)
-
-		// Setup SSAO Pass
-		this.ssaoPass = new THREE.ShaderPass(THREE.SSAOShader)
-		this.ssaoPass.renderToScreen = true
-		this.ssaoPass.uniforms['tDepth'].value = this.depthRenderTarget.texture
-		this.ssaoPass.uniforms['size'].value.set(window.innerWidth, window.innerHeight)
-		this.ssaoPass.uniforms['cameraNear'].value = this.cameraRig.camera.near
-		this.ssaoPass.uniforms['cameraFar'].value = this.cameraRig.camera.far
-		this.ssaoPass.uniforms['onlyAO'].value = false
-		this.ssaoPass.uniforms['aoClamp'].value = 0.1
-
-		this.ssaoPass.uniforms['lumInfluence'].value = 1.0
-
 		// Add pass to effect composer
-		this.effectComposer = new THREE.EffectComposer(gl.renderer)
-		this.effectComposer.addPass(this.renderPass)
-		this.effectComposer.addPass(this.ssaoPass)
+		this.composer = new THREE.EffectComposer(gl.renderer)
+		this.composer.addPass(this.renderPass)
+
+		let chromaticAberration = new ChromaticAberration()
+
+		this.composer.addPass(chromaticAberration)
+
+		this.composer.passes[this.composer.passes.length - 1].renderToScreen = true
 	}
 
 	initController() {
@@ -101,9 +85,7 @@ export default class Canvas {
 
 		gl.renderer.setSize(w, h)
 		this.cameraRig.setAspect(w / h)
-		this.ssaoPass.uniforms['size'].value.set(w, h)
-		this.depthRenderTarget.setSize(w, h)
-		this.effectComposer.setSize(w, h)
+		this.composer.setSize(w, h)
 	}
 
 	onScroll(e) {
@@ -118,19 +100,8 @@ export default class Canvas {
 
 		this.cameraRig.update()
 
-		if (Config.ENABLE_AO) {
-
-			// Render depth into depthRenderTarget
-			this.scene.overrideMaterial = this.depthmaterial
-			gl.renderer.render(
-				this.scene,
-				this.cameraRig.camera,
-				this.depthRenderTarget,
-				true)
-
-			// Render renderPass and SSAO shaderPass
-			this.scene.overrideMaterial = null
-			this.effectComposer.render()
+		if (Config.ENABLE_POSTEFFECTS) {
+			this.composer.render()
 
 		} else {
 

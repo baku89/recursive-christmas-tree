@@ -15,7 +15,7 @@ let Config = {
 	LEAF_OFFSET_Y: 7,
 
 
-	ENABLE_AO: false,
+	ENABLE_POSTEFFECTS: true,
 
 	// environment
 	BG: 0xf7fbfd,

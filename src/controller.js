@@ -44,16 +44,22 @@ class Controller extends EventEmitter {
 
 		console.log('start listening')
 		document.addEventListener('keydown', this.onKeydown.bind(this))
+		$(window).on('touchstart', this.onTouchstart.bind(this))
 	}
 
 	onKeydown(e) {
-
 		let key = String.fromCharCode(e.keyCode)
-
-		// console.log(key)
-
 		let type = e.keyCode % 2
-		console.log(type)
+
+		this.send(type)
+	}
+
+	onTouchstart(e) {
+
+		this.send(0)
+	}
+
+	send(type) {
 
 		// play
 		let ppc = new createjs.PlayPropsConfig().set({
