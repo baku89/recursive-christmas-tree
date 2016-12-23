@@ -64,8 +64,6 @@ class CameraRig extends THREE.Group {
 		this.targetZoom *= this.zoomStep
 
 		this.stepY *= Config.LEAF_SCALE
-
-		console.log(this.targetZoom)
 	}
 
 	reset() {

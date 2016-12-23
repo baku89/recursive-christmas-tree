@@ -13,9 +13,7 @@ let modelList = [
 	{id: 'ground', src: './assets/ground.obj', loader:'obj'},
 	{id: 'tree', src: './assets/tree.obj', loader:'obj'},
 	{id: 'splines', src: './assets/splines.dae', loader: 'collada'},
-	{id: 'pattern0', src: './assets/pattern0.dae', loader: 'collada'},
-	{id: 'pattern1', src: './assets/pattern1.dae', loader: 'collada'},
-	{id: 'pattern2', src: './assets/pattern2.dae', loader: 'collada'}
+	{id: 'balls', src: './assets/balls.obj', loader: 'obj'}
 ]
 
 let assets = {
@@ -82,12 +80,16 @@ class Loader extends EventEmitter {
 
 				assets.model[model.id] = object
 
-				let loaded = (preloadWeight + (remaining / total) * objWeight) / totalWeight
+				remaining--
+
+				let loaded = (preloadWeight + (1 - remaining / total) * objWeight) / totalWeight
 
 				this.emit('progress', loaded)
 
-				if (--remaining == 0) {
-					this.emit('complete')
+				if (remaining == 0) {
+					setTimeout(() => {
+						this.emit('complete')
+					}, 200)
 				}
 
 			})

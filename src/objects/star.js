@@ -7,7 +7,7 @@ export default class Star extends THREE.Mesh {
 		let geom = assets.model.tree.children[2].geometry
 		let mat = new THREE.MeshLambertMaterial({
 			color: 0xEAED6A,
-			emissive: 0x9EA448
+			emissive: 0xdb6f27
 		})
 
 		super(geom, mat)

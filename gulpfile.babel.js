@@ -87,11 +87,18 @@ gulp.task('release', () => {
 })
 
 //==================================================
+gulp.task('move', () => {
+	return gulp.src('./public/**/*')
+		.pipe(gulp.dest('../app/final_site/app/xps/2016/23/recursive'))	
+})
+
+//==================================================
 
 gulp.task('default', ['webpack', 'pug', 'stylus', 'watch', 'browser-sync'])
 gulp.task('build', () => {
 	runSequence(
 		'release',
-		['pug', 'stylus', 'webpack']
+		['pug', 'stylus', 'webpack'],
+		'move'
 	)
 })

@@ -37,32 +37,20 @@ class Controller extends EventEmitter {
 		this.notReset = true
 		this.currentNote = 0
 
+		this.send = this.send.bind(this)
+
 		timeline.on('start-grow', this.start.bind(this))
 	}
+
 	start() {
 
-		console.log('start listening')
-
-		document.addEventListener('keydown', this.onKeydown.bind(this))
-
-		$(window).on({
-			'touchstart mousedown': this.onClick.bind(this)
-		})
+		document.addEventListener('keydown', this.send)
+		$(window).on('touchstart mousedown', this.send)
 	}
 
-	onKeydown(e) {
-		let key = String.fromCharCode(e.keyCode)
-		let type = e.keyCode % 1
+	send() {
 
-		this.send(type)
-	}
-
-	onClick(e) {
-
-		this.send(0)
-	}
-
-	send(type) {
+		let type = THREE.Math.randInt(0, Config.PATTERN_NUM - 1)
 
 		// play
 		let ppc = new createjs.PlayPropsConfig().set({

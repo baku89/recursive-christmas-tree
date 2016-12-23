@@ -31,7 +31,9 @@ let Config = {
 	HDPI: device_pixel_ratio(),
 	FPS: 30,
 
-	MOBILE: mobile()
+	MOBILE: mobile(),
+
+	PATTERN_NUM: 3
 
 }
 

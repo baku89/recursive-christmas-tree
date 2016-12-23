@@ -2,6 +2,12 @@ import Leaf from './leaf'
 
 const Tween = TWEEN.Tween
 
+const balls = assets.model['balls']
+const whiteBallMaterial = new THREE.MeshLambertMaterial({
+	color: 0xffffff,
+	emissive: 0x155A76
+})
+
 function getModel(name) {
 	let scene = assets.model[name].scene
 	return scene
@@ -25,68 +31,193 @@ function convertToSplineGeometry(geometry) {
 	return bufferGeometry
 }
 
-function runSplineAnimation(line, duration = 1500, width = 0.2) {
+function runSplineAnimation(line, duration = 1500, width = 0.2, delay = 0) {
 
 	let geom = line.geometry
 	let num = geom.attributes.position.count
 	let count = Math.ceil(num * width)
 
-	new TWEEN.Tween({start: -count})
-		.to({start: num}, duration)
-		.onUpdate(function() {
-			geom.setDrawRange(
-				Math.max(this.start, 0),
-				Math.min(count, num - this.start)
-			)
-		})
+	geom.setDrawRange(0, 0)
+
+	setTimeout(() => {
+
+		new TWEEN.Tween({start: -count})
+			.to({start: num}, duration)
+			.onUpdate(function() {
+				geom.setDrawRange(
+					Math.max(this.start, 0),
+					Math.min(count, num - this.start)
+				)
+			})
+			.easing(TWEEN.Easing.Cubic.Out)
+			.start()
+
+	}, delay)
+}
+
+function runBallAnimation(balls) {
+	balls.position.y = 6
+	balls.scale.set(.5, .5, .5)
+	balls.rotation.y = -Math.PI / 2
+
+	new Tween(balls.position)
+		.to({y: 0}, 400)
+		.easing(TWEEN.Easing.Cubic.Out)
+		.start()
+
+	new Tween(balls.scale)
+		.to({x:1, y:1, z:1}, 400)
+		.easing(TWEEN.Easing.Cubic.Out)
+		.start()
+
+	new Tween(balls.rotation)
+		.to({y: 0}, 1000)
 		.easing(TWEEN.Easing.Cubic.Out)
 		.start()
 }
-
 //--------------------------------------------------
 
-class MovingLeaf extends Leaf {
-	
-	constructor(name, autoAdd = true) {
+class MovingLeaf0 extends Leaf {
+	constructor() {
 		super()
 
+		let splines = MovingLeaf0.splines.clone()
+		this.add(splines)
 
-		this.name = name || ''
+		this.balls = MovingLeaf0.balls.clone()
 
-		if (name) {
-			this.model = getModel(name).clone()
+		this.add(this.balls)
 
-			if (autoAdd) {
-				this.add(this.model)
-			}
-		}
-	}
+		runBallAnimation(this.balls)
 
-	start() {
-		console.log(`${this.name} has no animation`)
-	}
-}
+		new Tween(splines.position)
+		.to({y: -80}, 4800)
+		.easing(TWEEN.Easing.Cubic.Out)
+		.start()
 
-//--------------------------------------------------
-
-class MovingLeaf0 extends MovingLeaf {
-	constructor() {
-		super('pattern0')
-
-		new TWEEN.Tween(this.model.rotation)
-			.to({y: Math.PI}, 2000)
+		new Tween(splines.scale)
+			.to({x:4, y:4, z:4}, 4800)
 			.easing(TWEEN.Easing.Cubic.Out)
 			.start()
+
+		new Tween(splines.rotation)
+			.to({y: Math.PI * 2}, 4800)
+			.start()
+
+
 	}
+
+	static createSpline() {
+		return new THREE.Line(
+			this.spline.geometry.clone(),
+			this.spline.material
+		)
+	}
+}
+
+{
+	{
+		let geom = getModel('splines').children[0].children[0].geometry
+		geom = convertToSplineGeometry(geom)
+		let mat = new THREE.LineBasicMaterial({
+			color: 0xE1CEAC
+		})
+
+		let spline1 = new THREE.LineSegments(geom, mat)
+		let spline2 = new THREE.Line(geom, mat)
+
+		spline2.position.y = 1
+
+		let splines = new THREE.Group()
+		splines.add(spline1)
+		splines.add(spline2)
+
+		MovingLeaf0.splines = splines
+	}
+
+
+	let parent = new THREE.Group()
+	
+	parent.add(new THREE.Mesh(
+		balls.getObjectByName('balls.white.0').geometry,
+		whiteBallMaterial
+	))
+
+	parent.add(new THREE.Mesh(
+		balls.getObjectByName('balls.yellow.0').geometry,
+		new THREE.MeshLambertMaterial({
+			color: 0xE8C94F,
+			emissive: 0x8B341F
+		})
+	))
+	
+	MovingLeaf0.balls = parent
 }
 
 
 //--------------------------------------------------
 
-class MovingLeaf1 extends MovingLeaf {
+class MovingLeaf1 extends Leaf {
 	constructor() {
-		super('pattern1')
+		super()
+
+		// model
+		let spline1 = MovingLeaf1.createSpline()
+		this.add(spline1)
+
+		let spline2 = MovingLeaf1.createSpline()
+		spline2.rotation.y = THREE.Math.degToRad(-60)
+		this.add(spline2)
+
+		let spline3 = MovingLeaf1.createSpline()
+		spline3.rotation.y = THREE.Math.degToRad(-120)
+		this.add(spline3)
+
+
+		runSplineAnimation(spline1, 2000, .2, 0)
+
+		runSplineAnimation(spline2, 2000, .2, 200)
+		runSplineAnimation(spline3, 2000, .2, 400)
+
+		this.balls = MovingLeaf1.balls.clone()
+		this.add(this.balls)
+
+		runBallAnimation(this.balls)
 	}
+
+	static createSpline() {
+		return new THREE.Line(
+			this.spline.geometry.clone(),
+			this.spline.material
+		)
+	}
+}
+
+{
+	let geom = getModel('splines').children[1].children[0].geometry
+	MovingLeaf1.spline = {
+		geometry: convertToSplineGeometry(geom),
+		material: new THREE.LineBasicMaterial({
+			color: 0xA4DC0F
+		})
+	}
+
+	let parent = new THREE.Group()
+
+	parent.add(new THREE.Mesh(
+		balls.getObjectByName('balls.white.1').geometry,
+		whiteBallMaterial
+	))
+
+	parent.add(new THREE.Mesh(
+		balls.getObjectByName('balls.magenta.1').geometry,
+		new THREE.MeshLambertMaterial({
+			color: 0xEF331B,
+			emissive: 0x6C1576
+		})
+	))
+	
+	MovingLeaf1.balls = parent
 }
 
 //--------------------------------------------------
@@ -103,29 +234,7 @@ class MovingLeaf2 extends Leaf {
 		this.add(this.balls)
 
 		runSplineAnimation(spline, 2600)
-
-
-		this.balls.position.y = 6
-		this.balls.scale.set(.5, .5, .5)
-		this.balls.rotation.y = -Math.PI / 2
-
-		new Tween(this.balls.position)
-			.to({y: 0}, 400)
-			.easing(TWEEN.Easing.Cubic.Out)
-			.start()
-
-		new Tween(this.balls.scale)
-			.to({x:1, y:1, z:1}, 400)
-			.easing(TWEEN.Easing.Cubic.Out)
-			.start()
-
-		new Tween(this.balls.rotation)
-			.to({y: 0}, 1000)
-			.easing(TWEEN.Easing.Cubic.Out)
-			.start()
-
-			
-
+		runBallAnimation(this.balls)
 	}
 
 	static createSpline() {
@@ -137,7 +246,7 @@ class MovingLeaf2 extends Leaf {
 }
 
 {
-	let geom = getModel('splines').children[0].children[0].geometry
+	let geom = getModel('splines').children[2].children[0].geometry
 	MovingLeaf2.spline = {
 		geometry: convertToSplineGeometry(geom),
 		material: new THREE.LineBasicMaterial({
@@ -145,8 +254,22 @@ class MovingLeaf2 extends Leaf {
 		})
 	}
 
-	let model = getModel('pattern2')
-	MovingLeaf2.balls = model.children[1]
+	let parent = new THREE.Group()
+
+	parent.add(new THREE.Mesh(
+		balls.getObjectByName('balls.white.2').geometry,
+		whiteBallMaterial
+	))
+
+	parent.add(new THREE.Mesh(
+		balls.getObjectByName('balls.purple.2').geometry,
+		new THREE.MeshLambertMaterial({
+			color: 0x4F7DE8,
+			emissive: 0x591576
+		})
+	))
+	
+	MovingLeaf2.balls = parent
 }
 
 //--------------------------------------------------
@@ -154,7 +277,7 @@ class MovingLeaf2 extends Leaf {
 
 
 export default [
-	MovingLeaf2,
 	MovingLeaf0,
-	MovingLeaf1
+	MovingLeaf1,
+	MovingLeaf2
 ]

@@ -28,7 +28,7 @@ export default class Canvas {
 		})
 
 		// controller
-		controller.on('first-reset', () => {
+		controller.on('first-tap', () => {
 			this.scene.remove(this.ground)
 		})
 
