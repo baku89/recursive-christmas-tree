@@ -1,5 +1,6 @@
 
 import Leaf from './leaf'
+import Star from './star'
 
 let leafMatrix = new THREE.Matrix4()
 
@@ -20,6 +21,10 @@ class LeafManager extends THREE.Group {
 
 		this.newMatrix = new THREE.Matrix4()
 
+		// 0 is star
+		this.star = new Star()
+		this.add(this.star)
+
 		this.addInitialLeaves()
 
 		controller.on('tap', this.addLeaf.bind(this))
@@ -39,17 +44,40 @@ class LeafManager extends THREE.Group {
 		}
 
 		this.originalMatrix = leaf.matrix.clone()
-		console.log(this.originalMatrix.elements)
+		this.star.position.copy(new THREE.Vector3(0, 15, 0).applyMatrix4(leaf.matrix))
 	}
 
 	addLeaf() {
-		console.log(this.originalMatrix.elements)
-
 		let leaf = new Leaf()
 		leaf.applyMatrix(this.newMatrix)
 		this.add(leaf)
-
 		this.newMatrix.multiply(leafMatrix)
+
+		// make the star jump
+
+		let sp = this.star.position
+		let ny = new THREE.Vector3(0, 15, 0).applyMatrix4(leaf.matrix).y
+		let ty = sp.y + 15 * leaf.matrix.getMaxScaleOnAxis()
+
+		let ns = this.star.scale.x * Config.LEAF_SCALE
+		this.star.scale.set(ns, ns, ns)
+
+		if (this.starTween) {
+			this.starTween.stop()
+		}
+
+		let tw2 = new TWEEN.Tween(sp)
+			.to({y: ny}, 300)
+			.easing(TWEEN.Easing.Bounce.Out)
+
+		this.starTween = new TWEEN.Tween(sp)
+			.to({y: ty}, 150)
+			.easing(TWEEN.Easing.Cubic.Out)
+			.chain(tw2)
+			.onComplete(() => this.starTween = tw2)
+			.start()
+
+
 	}
 
 	reset() {
@@ -61,7 +89,13 @@ class LeafManager extends THREE.Group {
 			leaf.applyMatrix(resetMat)
 		})
 
+		this.star.rotation.y = 0
+
 		this.newMatrix = this.originalMatrix.clone()
+	}
+
+	update() {
+
 	}
 }
 

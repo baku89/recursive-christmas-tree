@@ -64,6 +64,10 @@ class Stage extends THREE.Group {
 			this.remove(this.plate, this.stem)
 		})
 	}
+
+	update() {
+		this.leafManager.update()
+	}
 }
 
 export default new Stage()

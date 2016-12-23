@@ -1,7 +1,7 @@
 
 let treeMesh = new THREE.Mesh(
 	assets.obj.tree.children[0].geometry,
-	new THREE.MeshLambertMaterial({color: Config.LEAF})
+	new THREE.MeshLambertMaterial({color: Config.LEAF, wireframe: false})
 )
 
 export default class Leaf extends THREE.Group {
@@ -11,6 +11,6 @@ export default class Leaf extends THREE.Group {
 
 		this.add(treeMesh.clone())
 
-		// this.add(new THREE.AxisHelper(30))
+		
 	}
 }

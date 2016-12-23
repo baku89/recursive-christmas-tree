@@ -114,6 +114,7 @@ export default class Canvas {
 		TWEEN.update()
 
 		this.cameraRig.update()
+		this.stage.update()
 
 		if (Config.ENABLE_AO) {
 
