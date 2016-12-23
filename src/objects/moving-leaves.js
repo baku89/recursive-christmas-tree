@@ -91,17 +91,18 @@ class MovingLeaf0 extends Leaf {
 		runBallAnimation(this.balls)
 
 		new Tween(splines.position)
-		.to({y: -80}, 4800)
+		.to({y: -40}, 3000)
 		.easing(TWEEN.Easing.Cubic.Out)
 		.start()
 
 		new Tween(splines.scale)
-			.to({x:4, y:4, z:4}, 4800)
+			.to({x:2.4, y:2.4, z:2.4}, 3000)
 			.easing(TWEEN.Easing.Cubic.Out)
 			.start()
 
 		new Tween(splines.rotation)
-			.to({y: Math.PI * 2}, 4800)
+			.to({y: Math.PI}, 3000)
+			.easing(TWEEN.Easing.Cubic.Out)
 			.start()
 
 
@@ -127,6 +128,7 @@ class MovingLeaf0 extends Leaf {
 		let spline2 = new THREE.Line(geom, mat)
 
 		spline2.position.y = 1
+		spline2.scale.set(.95, .95, .95)
 
 		let splines = new THREE.Group()
 		splines.add(spline1)

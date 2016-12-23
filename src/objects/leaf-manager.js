@@ -81,15 +81,15 @@ class LeafManager extends THREE.Group {
 			this.starTween.stop()
 		}
 
-		let tw2 = new TWEEN.Tween(sp)
-			.to({y: ny}, 300)
-			.easing(TWEEN.Easing.Bounce.Out)
-
 		this.starTween = new TWEEN.Tween(sp)
-			.to({y: ty}, 150)
+			.to({y: ty}, 100)
 			.easing(TWEEN.Easing.Cubic.Out)
-			.chain(tw2)
-			.onComplete(() => this.starTween = tw2)
+			.onComplete(() => {
+				this.starTween = new TWEEN.Tween(sp)
+				.to({y: ny}, 500)
+				.easing(TWEEN.Easing.Bounce.Out)
+				.start()
+			})
 			.start()
 
 

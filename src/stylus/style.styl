@@ -66,7 +66,7 @@ html
 	// -moz-osx-font-smoothing none
 
 	+mobile()
-		font-size 6px
+		font-size 8px
 
 body
 	// font-size 1.6rem
@@ -164,7 +164,6 @@ button
 	mix-blend-mode exclusion
 	border 1px dashed transparent
 	border-radius 50%
-	// background red
 	transition border-color .2s ease
 	overflow hidden
 	transition opacity .5s $easing
@@ -177,7 +176,7 @@ button
 	&:hover
 		border-color $c-invert
 
-		.show-about &
+	body.show-about &
 		.wrapper
 			transform translateY(0)
 
@@ -221,7 +220,7 @@ button
 	transition all .5s $easing 0s, visibility 0s linear 0.5s
 	visibility hidden
 	opacity 0
-	background-color #25e0f3//$c-invert
+	background-color $c-invert//#25e0f3
 	mix-blend-mode exclusion
 
 	.show-about &

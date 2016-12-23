@@ -16,7 +16,7 @@ class Snow extends THREE.Points {
 				positions[i3 + 1] = THREE.Math.randFloat(-20, 40)
 				positions[i3 + 2] = radius * Math.sin(angle)
 
-				sizes[i] = THREE.Math.randFloat(60, 120)
+				sizes[i] = THREE.Math.randFloat(30, 80)
 				
 				timeOffsets[i] = Math.random() * .05
 				timeScales[i]  = THREE.Math.randFloat(1, 2)
@@ -47,7 +47,7 @@ class Snow extends THREE.Points {
 		this.uniforms.time.value = 0
 
 		new TWEEN.Tween(this.uniforms.time)
-			.to({value: 2.05}, 18000)
+			.to({value: 2.05}, 12000)
 			.start()
 	}
 }

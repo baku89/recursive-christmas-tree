@@ -72,6 +72,10 @@ class Controller extends EventEmitter {
 		if (snowNote.indexOf(this.currentNote) != -1) {
 			this.emit('snow')
 		}
+
+		if (!this.notPressed && this.currentNote == 0) {
+			this.emit('invert')
+		}
 		
 		this.currentNote = (this.currentNote + 1) % rythm.length
  

@@ -68,7 +68,6 @@ class CameraRig extends THREE.Group {
 
 	reset() {
 		let rot = this.rotation.y * -1
-		console.log('camera', rot)
 
 		this.stepY = this.initialStepY
 		this.targetY = this.initialTargetY

@@ -1,6 +1,7 @@
 // #pragma glslify: chromaticAberration = require(./chromatic-aberration)
 #pragma glslify: random = require(glsl-random)
 #pragma glslify: blendOverlay = require(glsl-blend/overlay)
+#pragma glslify: blendExclusion = require(glsl-blend/exclusion)
 
 
 uniform sampler2D tDiffuse;
@@ -8,6 +9,7 @@ uniform sampler2D tIce;
 uniform vec2 resolution;
 uniform vec2 iceOffset;
 uniform float effectIntensity;
+uniform float invert;
 
 varying vec2 vUv;
 
@@ -38,6 +40,8 @@ void main() {
   ).rgb;
 
   color = blendOverlay(color, ice, effectIntensity);
+
+  color = blendExclusion(color, vec3(0.15, 0.88, 0.95), invert);
 
   gl_FragColor = vec4(color, 1.0);
 }
