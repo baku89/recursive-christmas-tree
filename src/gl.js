@@ -2,8 +2,7 @@ let gl = {}
 
 gl.textureLoader = new THREE.TextureLoader()
 gl.renderer = new THREE.WebGLRenderer({
-	canvas: $('.canvas')[0],
-	antialias: true
+	canvas: $('.canvas')[0]
 })
 
 gl.texture = gl.textureLoader.load(require('base64-image!./1x1-transparent.png'))

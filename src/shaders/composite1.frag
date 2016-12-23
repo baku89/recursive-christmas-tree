@@ -11,7 +11,8 @@ uniform vec2 iceOffset;
 varying vec2 vUv;
 
 const vec3 VIGNETTE_COLOR = vec3(0.14, 0.33, 0.42);
-const float BLUR_INTENSITY = 0.01;
+const float BLUR_MIN = 0.001;
+const float BLUR_MAX = 0.01;
 
 void main() { 
 
@@ -21,9 +22,10 @@ void main() {
   float rand0 = random(vUv);
   float rand1 = random(vUv + vec2(400.0));
 
+  float blurIntensity = mix(BLUR_MIN, BLUR_MAX, intensity);
   vec3 color = 0.5 *
-    (texture2D(tDiffuse, vUv + rand0 * BLUR_INTENSITY * intensity).rgb +
-      texture2D(tDiffuse, vUv + rand1 * BLUR_INTENSITY * intensity).rgb);
+    (texture2D(tDiffuse, vUv + rand0 * blurIntensity).rgb +
+     texture2D(tDiffuse, vUv + rand1 * blurIntensity).rgb);
 
   // vignette
   color = mix(color, VIGNETTE_COLOR, intensity * 0.2);

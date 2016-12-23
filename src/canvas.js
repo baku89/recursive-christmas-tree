@@ -1,9 +1,10 @@
 /* global gl */
-import { device_pixel_ratio } from 'javascript-retina-detect'
+
 
 import './gl'
 
-import Composite1 from './post-effects/composite1'
+import CompositePass0 from './post-effects/composite-pass0'
+import CompositePass1 from './post-effects/composite-pass1'
 
 export default class Canvas {
 
@@ -55,7 +56,7 @@ export default class Canvas {
 		this.scene.add(this.stage)
 
 		gl.renderer.setClearColor(Config.BG)
-		gl.renderer.setPixelRatio(device_pixel_ratio())
+		gl.renderer.setPixelRatio(Config.HDPI)
 	}
 
 	initPostprocessing() {
@@ -66,9 +67,11 @@ export default class Canvas {
 		this.composer = new THREE.EffectComposer(gl.renderer)
 		this.composer.addPass(this.renderPass)
 
-		this.composite1 = new Composite1()
+		this.compositePass0 = new CompositePass0()
+		this.composer.addPass(this.compositePass0)
 
-		this.composer.addPass(this.composite1)
+		this.compositePass1 = new CompositePass1()
+		this.composer.addPass(this.compositePass1)
 
 		this.composer.passes[this.composer.passes.length - 1].renderToScreen = true
 	}
@@ -86,7 +89,8 @@ export default class Canvas {
 
 		gl.renderer.setSize(w, h)
 		this.cameraRig.setAspect(aspect)
-		this.composite1.setResolution(w, h)
+		this.compositePass0.setResolution(w, h)
+		this.compositePass1.setResolution(w, h)
 		this.composer.setSize(w, h)
 	}
 

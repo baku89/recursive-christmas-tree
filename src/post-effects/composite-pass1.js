@@ -1,4 +1,4 @@
-export default class ChromaticAberration extends THREE.ShaderPass {
+export default class CompositePass1 extends THREE.ShaderPass {
 
 	constructor() {
 		super({
