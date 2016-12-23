@@ -64,6 +64,7 @@ class LeafManager extends THREE.Group {
 	addLeaf(type) {
 		let leaf = new MovingLeaves[type]()
 		leaf.applyMatrix(this.newMatrix)
+
 		this.add(leaf)
 		this.newMatrix.multiply(leafMatrix)
 
@@ -112,7 +113,7 @@ class LeafManager extends THREE.Group {
 
 		this.star.rotation.y = 0
 
-		this.newMatrix = this.originalMatrix.clone()
+		this.newMatrix = this.newMatrix.multiply(resetMat)
 
 		controller.emit('reset-matrix', resetMat)
 	}

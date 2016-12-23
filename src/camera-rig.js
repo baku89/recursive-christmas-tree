@@ -39,7 +39,9 @@ class CameraRig extends THREE.Group {
 		this.position.y = Config.LEAF_OFFSET_Y
 		this.targetY = this.position.y
 		this.targetRot = 0
-		this.targetZoom = 1
+		this.targetZoom = 0.4
+		this.zoomStep = Config.LEAF_SCALE_INV * 1.0406429335
+
 
 		// offset 4
 		for (let i = 0; i < 4; i++) {
@@ -48,7 +50,9 @@ class CameraRig extends THREE.Group {
 		}
 
 		this.position.y = this.targetY
+		this.camera.zoom = this.targetZoom
 		this.camera.updateProjectionMatrix()
+
 		this.initialStepY = this.stepY
 		this.initialTargetY = this.targetY
 		controller.on('reset', this.reset.bind(this))
@@ -57,9 +61,11 @@ class CameraRig extends THREE.Group {
 	lift() {
 		this.targetY += this.stepY
 		this.targetRot += Config.CAMERA_ROT
-		this.targetZoom *= Config.LEAF_SCALE_INV
+		this.targetZoom *= this.zoomStep
 
 		this.stepY *= Config.LEAF_SCALE
+
+		console.log(this.targetZoom)
 	}
 
 	reset() {
@@ -69,6 +75,7 @@ class CameraRig extends THREE.Group {
 		this.stepY = this.initialStepY
 		this.targetY = this.initialTargetY
 		this.targetZoom = 1
+		this.zoomStep = Config.LEAF_SCALE_INV
 
 		this.position.y = this.targetY
 
@@ -92,7 +99,6 @@ class CameraRig extends THREE.Group {
 
 	setAspect(aspect) {
 		
-
 		this.camera.left 		= w * aspect / -2
 		this.camera.right 	= w * aspect / 2
 		this.camera.top			= w / 2

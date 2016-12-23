@@ -145,13 +145,8 @@ class MovingLeaf2 extends Leaf {
 		})
 	}
 
-	console.log(MovingLeaf2.spline)
-
-
 	let model = getModel('pattern2')
 	MovingLeaf2.balls = model.children[1]
-
-	console.log(MovingLeaf2.balls)
 }
 
 //--------------------------------------------------
