@@ -56,7 +56,7 @@ gulp.task('pug', () => {
 gulp.task('stylus', () => {
 	return gulp.src('./src/stylus/style.styl')
 		.pipe($.plumber())
-		.pipe($.stylus({use: [require('nib')()]}))
+		.pipe($.stylus({use: [require('nib')(), require('svg-stylus')()]}))
 		.pipe($.autoprefixer())
 		.pipe($.if(!developmentMode, $.combineMq()))
 		.pipe($.if(!developmentMode, $.minifyCss()))
@@ -89,7 +89,7 @@ gulp.task('release', () => {
 //==================================================
 gulp.task('move', () => {
 	return gulp.src('./public/**/*')
-		.pipe(gulp.dest('../app/final_site/app/xps/2016/23/recursive'))	
+		.pipe(gulp.dest('../app/final_site/app/xps/2016/23/recursion'))	
 })
 
 //==================================================

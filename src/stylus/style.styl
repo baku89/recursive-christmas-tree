@@ -45,7 +45,7 @@ a
 
 	&:hover
 		color white
-		background $c-blue
+		background-color $c-blue
 
 //--------------------------------------------------
 html, body
@@ -116,7 +116,7 @@ button
 			background-color white
 
 //--------------------------------------------------
-// about
+// loading
 
 .loading
 	position absolute
@@ -255,6 +255,19 @@ button
 		visibility: visible
 		transition all .5s $easing 0s, visibility 0s linear 0s
 
+.about__github
+	display block
+	width 40px
+	height 40px
+	margin: 1em auto 0
+	background-color transparent !important
+	background-image svgurl('./src/stylus/img/octacat.svg') svg()
+	background-size 100% 100%
+	white-space nowrap
+	text-indent 100%
+	overflow hidden
+	border 0
+
 //--------------------------------------------------
 // instruction
 
@@ -275,6 +288,8 @@ button
 	border-radius 7px
 	transition opacity .5s $easing
 	opacity 0
+	user-select none
+	cursor default
 	
 	&.show
 		opacity 1
