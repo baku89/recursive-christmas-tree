@@ -12,19 +12,23 @@ export default class CompositePass1 extends THREE.ShaderPass {
 			fragmentShader: require('../shaders/composite1.frag')
 		})
 
-		setInterval(() => {
-
-			this.uniforms.iceOffset.value.set(
-				Math.random(),
-				Math.random()
-			)
-
-		}, Config.BEAT_DURATION / 2)
+		this.frameCount = 0
 
 	}
 
 	setResolution(w, h) {
 		this.uniforms.resolution.value.set(w, h)
+	}
+
+	update() {
+		if (this.frameCount == 0) {
+			this.uniforms.iceOffset.value.set(
+				Math.random(),
+				Math.random()
+			)
+		}
+
+		this.frameCount = (this.frameCount + 1) % 4
 	}
 
 }

@@ -37,7 +37,7 @@ class Stage extends THREE.Group {
 		}
 
 		// leaf parent
-		this.leafManager = require('./leaf-manager.js').default
+		this.leafManager = require('./leaf-manager').default
 		this.leafManager.position.y = Config.LEAF_OFFSET_Y
 		this.add(this.leafManager)
 

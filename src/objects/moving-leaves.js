@@ -1,8 +1,10 @@
 import Leaf from './leaf'
 
+const Tween = TWEEN.Tween
+
 function getModel(name) {
 	let scene = assets.model[name].scene
-	return scene.children[0]
+	return scene
 }
 
 function convertToSplineGeometry(geometry) {
@@ -92,10 +94,37 @@ class MovingLeaf1 extends MovingLeaf {
 class MovingLeaf2 extends Leaf {
 	constructor() {
 		super()
+
+		// model
 		let spline = MovingLeaf2.createSpline()
 		this.add(spline)
 
-		runSplineAnimation(spline)
+		this.balls = MovingLeaf2.balls.clone()
+		this.add(this.balls)
+
+		runSplineAnimation(spline, 2600)
+
+
+		this.balls.position.y = 6
+		this.balls.scale.set(.5, .5, .5)
+		this.balls.rotation.y = -Math.PI / 2
+
+		new Tween(this.balls.position)
+			.to({y: 0}, 400)
+			.easing(TWEEN.Easing.Cubic.Out)
+			.start()
+
+		new Tween(this.balls.scale)
+			.to({x:1, y:1, z:1}, 400)
+			.easing(TWEEN.Easing.Cubic.Out)
+			.start()
+
+		new Tween(this.balls.rotation)
+			.to({y: 0}, 1000)
+			.easing(TWEEN.Easing.Cubic.Out)
+			.start()
+
+			
 
 	}
 
@@ -108,14 +137,21 @@ class MovingLeaf2 extends Leaf {
 }
 
 {
-	let geom = getModel('pattern2').children[0].geometry
+	let geom = getModel('splines').children[0].children[0].geometry
 	MovingLeaf2.spline = {
 		geometry: convertToSplineGeometry(geom),
 		material: new THREE.LineBasicMaterial({
-			color: 0xFF4883,
-			lineWidth: 3
+			color: 0xFF4883
 		})
 	}
+
+	console.log(MovingLeaf2.spline)
+
+
+	let model = getModel('pattern2')
+	MovingLeaf2.balls = model.children[1]
+
+	console.log(MovingLeaf2.balls)
 }
 
 //--------------------------------------------------

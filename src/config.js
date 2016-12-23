@@ -30,10 +30,12 @@ let Config = {
 
 	FILL_LIGHT: 0x6536FF,
 
-	HDPI: device_pixel_ratio()
+	HDPI: device_pixel_ratio(),
+	FPS: 30
 
 }
 
 Config.LEAF_SCALE_INV = 1 / Config.LEAF_SCALE
+Config.FRAME_DURATION = 1000 / Config.FPS
 
 window.Config = Config

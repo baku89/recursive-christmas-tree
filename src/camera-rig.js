@@ -1,7 +1,7 @@
 import EventEmitter from 'eventemitter3'
 
-let w = 100
-let h = 100
+let w = 80
+let h = 80
 
 let lerpIntensity = .15
 

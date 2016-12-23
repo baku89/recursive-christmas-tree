@@ -18,6 +18,7 @@ const rythm = [
 ]
 
 const resetNote = [0, 24]
+const snowNote = [0, 23]
 
 // calculate offset time
 let offset = 0
@@ -74,6 +75,10 @@ class Controller extends EventEmitter {
 			}
 			console.log('reset')
 			this.emit('reset')
+		}
+
+		if (snowNote.indexOf(this.currentNote) != -1) {
+			this.emit('snow')
 		}
 		
 		this.currentNote = (this.currentNote + 1) % rythm.length

@@ -35,6 +35,8 @@ export default class Canvas {
 		// start frame
 		this.clock = new THREE.Clock()
 		this.render = this.render.bind(this)
+		this.raf = this.raf.bind(this)
+
 		this.render()
 	}
 
@@ -98,13 +100,17 @@ export default class Canvas {
 		this.cameraRig.scroll(e)
 	}
 
-	render() {
-
+	raf() {
 		requestAnimationFrame(this.render)
+	}
+
+	render() {
+		setTimeout(this.raf, Config.FRAME_DURATION)
 
 		TWEEN.update()
 
 		this.cameraRig.update()
+		this.compositePass1.update()
 
 		if (Config.ENABLE_POSTEFFECTS) {
 			this.composer.render()

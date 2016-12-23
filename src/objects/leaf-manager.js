@@ -26,10 +26,23 @@ class LeafManager extends THREE.Group {
 		this.star = new Star()
 		this.add(this.star)
 
+		// 1 is snow
+		this.snow = require('./snow').default
+		this.add(this.snow)
+
 		this.addInitialLeaves()
 
 		controller.on('tap', this.addLeaf.bind(this))
 		controller.on('reset', this.reset.bind(this))
+		controller.on('snow', () => {
+			let pos = new THREE.Vector3(),
+				quat = new THREE.Quaternion(),
+				scale = new THREE.Vector3()
+			this.newMatrix.decompose(pos, quat, scale)
+			this.snow.position.copy(pos)
+			this.snow.scale.copy(scale)
+			this.snow.animate()
+		})
 	}
 
 	addInitialLeaves() {
@@ -100,6 +113,8 @@ class LeafManager extends THREE.Group {
 		this.star.rotation.y = 0
 
 		this.newMatrix = this.originalMatrix.clone()
+
+		controller.emit('reset-matrix', resetMat)
 	}
 }
 

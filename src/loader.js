@@ -12,6 +12,7 @@ let manifest = [
 let modelList = [
 	{id: 'ground', src: './assets/ground.obj', loader:'obj'},
 	{id: 'tree', src: './assets/tree.obj', loader:'obj'},
+	{id: 'splines', src: './assets/splines.dae', loader: 'collada'},
 	{id: 'pattern0', src: './assets/pattern0.dae', loader: 'collada'},
 	{id: 'pattern1', src: './assets/pattern1.dae', loader: 'collada'},
 	{id: 'pattern2', src: './assets/pattern2.dae', loader: 'collada'}
