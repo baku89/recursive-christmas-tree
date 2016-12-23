@@ -20,6 +20,10 @@ export default class App {
 			$('body').toggleClass('show-about')
 		})
 
+		if (Config.MOBILE) {
+			$('.instruction-message').html('Tap Screen')
+		}
+
 		// start timeline
 		timeline.run()
 

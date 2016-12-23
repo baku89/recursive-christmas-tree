@@ -54,6 +54,7 @@
     "gulp-stylus": "^2.3.0",
     "gulp-util": "^3.0.7",
     "imports-loader": "^0.6.5",
+    "is-mobile": "^0.2.2",
     "javascript-retina-detect": "^0.1.4",
     "jquery": "^3.0.0",
     "jquery-touch-events": "^1.0.3",

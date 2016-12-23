@@ -1,7 +1,5 @@
-import MobileDetect from 'mobile-detect'
+import mobile from 'is-mobile'
 import { device_pixel_ratio } from 'javascript-retina-detect'
-
-let md = new MobileDetect(window.navigator.userAgent)
 
 let Config = {
 
@@ -31,7 +29,9 @@ let Config = {
 	FILL_LIGHT: 0x6536FF,
 
 	HDPI: device_pixel_ratio(),
-	FPS: 30
+	FPS: 30,
+
+	MOBILE: mobile()
 
 }
 

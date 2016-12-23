@@ -42,18 +42,22 @@ class Controller extends EventEmitter {
 	start() {
 
 		console.log('start listening')
+
 		document.addEventListener('keydown', this.onKeydown.bind(this))
-		$(window).on('touchstart', this.onTouchstart.bind(this))
+
+		$(window).on({
+			'touchstart mousedown': this.onClick.bind(this)
+		})
 	}
 
 	onKeydown(e) {
 		let key = String.fromCharCode(e.keyCode)
-		let type = e.keyCode % 2
+		let type = e.keyCode % 1
 
 		this.send(type)
 	}
 
-	onTouchstart(e) {
+	onClick(e) {
 
 		this.send(0)
 	}
@@ -86,7 +90,9 @@ class Controller extends EventEmitter {
 		this.emit('tap', type)
 
 		if (this.notPressed) {
-			this.emit('first-tap')
+			setTimeout(() => {
+				this.emit('first-tap')
+			}, 1000)
 			this.notPressed = false
 		}
 	}
