@@ -89,7 +89,7 @@ gulp.task('release', () => {
 //==================================================
 gulp.task('move', () => {
 	return gulp.src('./public/**/*')
-		.pipe(gulp.dest('../app/final_site/app/xps/2016/23/recursion'))	
+		.pipe(gulp.dest('../app/final_site/app/xps/2016/23/recursive-christmas-tree'))	
 })
 
 //==================================================

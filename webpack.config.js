@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
 	entry: {
@@ -7,7 +8,8 @@ module.exports = {
 	},
 	output: {
 		filename: '[name].js',
-		publicPath: '/js/'
+		publicPath: './js/',
+		path: path.join(__dirname, 'public')
 	},
 	resolve: {
 		alias: {},
