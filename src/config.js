@@ -15,6 +15,9 @@ let Config = {
 	LEAF_OFFSET_Y: 7,
 
 
+	BEAT_DURATION: 291,
+
+
 	ENABLE_POSTEFFECTS: true,
 
 	// environment

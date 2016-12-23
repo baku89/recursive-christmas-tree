@@ -5,14 +5,16 @@ import EventEmitter from 'eventemitter3'
 
 let manifest = [
 	{id: 'vendor', src: 'js/vendor.js'},
-	{id: 'jingle-bell', src: './assets/jingle-bell.mp3'}
+	{id: 'jingle-bell', src: './assets/jingle-bell.mp3'},
+	{id: 'ice', src: './assets/ice_texture.jpg'}
 ]
 
 let modelList = [
 	{id: 'ground', src: './assets/ground.obj', loader:'obj'},
 	{id: 'tree', src: './assets/tree.obj', loader:'obj'},
-	{id: 'pattern0', src: './assets/pattern0.dae', loader:'collada'},
-	{id: 'pattern1', src: './assets/pattern1.dae', loader:'collada'}
+	{id: 'pattern0', src: './assets/pattern0.dae', loader: 'collada'},
+	{id: 'pattern1', src: './assets/pattern1.dae', loader: 'collada'},
+	{id: 'pattern2', src: './assets/pattern2.dae', loader: 'collada'}
 ]
 
 let assets = {

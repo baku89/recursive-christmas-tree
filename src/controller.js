@@ -19,12 +19,10 @@ const rythm = [
 
 const resetNote = [0, 24]
 
-const beatDuration = 291
-
 // calculate offset time
 let offset = 0
 for (let i = 0; i < rythm.length; i++) {
-	let duration = rythm[i] * beatDuration
+	let duration = rythm[i] * Config.BEAT_DURATION
 	rythm[i] = {offset: offset, duration: duration}
 	offset += duration
 }

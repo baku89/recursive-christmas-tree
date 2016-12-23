@@ -3,7 +3,7 @@ import { device_pixel_ratio } from 'javascript-retina-detect'
 
 import './gl'
 
-import ChromaticAberration from './post-effects/chromatic-aberration'
+import Composite1 from './post-effects/composite1'
 
 export default class Canvas {
 
@@ -66,9 +66,9 @@ export default class Canvas {
 		this.composer = new THREE.EffectComposer(gl.renderer)
 		this.composer.addPass(this.renderPass)
 
-		let chromaticAberration = new ChromaticAberration()
+		this.composite1 = new Composite1()
 
-		this.composer.addPass(chromaticAberration)
+		this.composer.addPass(this.composite1)
 
 		this.composer.passes[this.composer.passes.length - 1].renderToScreen = true
 	}
@@ -82,9 +82,11 @@ export default class Canvas {
 	resizeCanvas() {
 		let w = window.innerWidth
 		let h = window.innerHeight
+		let aspect = w / h
 
 		gl.renderer.setSize(w, h)
-		this.cameraRig.setAspect(w / h)
+		this.cameraRig.setAspect(aspect)
+		this.composite1.setResolution(w, h)
 		this.composer.setSize(w, h)
 	}
 
