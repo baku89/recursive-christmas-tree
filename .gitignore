@@ -4,4 +4,6 @@ ftp.config.js
 public/*
 !public/assets
 
+*.c4d
+
 doc

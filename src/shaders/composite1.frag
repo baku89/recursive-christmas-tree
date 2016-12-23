@@ -7,6 +7,7 @@ uniform sampler2D tDiffuse;
 uniform sampler2D tIce;
 uniform vec2 resolution;
 uniform vec2 iceOffset;
+uniform float effectIntensity;
 
 varying vec2 vUv;
 
@@ -28,7 +29,7 @@ void main() {
      texture2D(tDiffuse, vUv + rand1 * blurIntensity).rgb);
 
   // vignette
-  color = mix(color, VIGNETTE_COLOR, intensity * 0.2);
+  color = mix(color, VIGNETTE_COLOR, intensity * effectIntensity * 0.2);
 
   // ice overlay
   vec3 ice = texture2D(
@@ -36,7 +37,7 @@ void main() {
     fract(gl_FragCoord.xy / vec2(512.) + iceOffset)
   ).rgb;
 
-  color = blendOverlay(color, ice);
+  color = blendOverlay(color, ice, effectIntensity);
 
   gl_FragColor = vec4(color, 1.0);
 }

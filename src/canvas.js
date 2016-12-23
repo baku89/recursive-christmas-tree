@@ -93,7 +93,7 @@ export default class Canvas {
 		this.cameraRig.setAspect(aspect)
 		this.compositePass0.setResolution(w, h)
 		this.compositePass1.setResolution(w, h)
-		this.composer.setSize(w, h)
+		this.composer.setSize(w * Config.HDPI, h * Config.HDPI)
 	}
 
 	onScroll(e) {

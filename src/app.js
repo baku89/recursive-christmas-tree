@@ -35,6 +35,10 @@ export default class App {
 			$('.instruction').addClass('show')
 		})
 
+		timeline.on('show-about', () => {
+			$('.about__button').addClass('show')
+		})
+
 		controller.on('first-tap', () => {
 			$('.instruction').removeClass('show')
 		})
