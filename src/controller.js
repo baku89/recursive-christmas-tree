@@ -52,7 +52,8 @@ class Controller extends EventEmitter {
 
 		// console.log(key)
 
-		let type = 0
+		let type = e.keyCode % 2
+		console.log(type)
 
 		// play
 		let ppc = new createjs.PlayPropsConfig().set({
@@ -63,11 +64,11 @@ class Controller extends EventEmitter {
 
 		if (!this.notPressed && resetNote.indexOf(this.currentNote) != -1) {
 			if (this.notReset) {
-				console.log('first-reset!')
+				console.log('first-reset')
 				this.emit('first-reset')
 				this.notReset = false
 			}
-			console.log('reset!')
+			console.log('reset')
 			this.emit('reset')
 		}
 		

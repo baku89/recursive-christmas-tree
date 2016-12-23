@@ -7,21 +7,21 @@ class Ground extends THREE.Object3D {
 			color: Config.BG
 		})
 
-		let obj = assets.obj.ground
+		let model = assets.model.ground
 
 		// surface
 		{
-			let geom = obj.children[0].geometry
+			let geom = model.children[0].geometry
 			let mesh = new THREE.Mesh(geom, surfaceMat)
 			this.add(mesh)
 		}
 
 		// hole
 		{
-			let geom = obj.children[2].geometry
+			let geom = model.children[2].geometry
 			let mat = new THREE.MeshLambertMaterial({
 				color: 0x95c4dc,
-				emmisive: 0x1a3c8c
+				emissive: 0x1a3c8c
 			})
 			let mesh = new THREE.Mesh(geom, mat)
 			this.add(mesh)

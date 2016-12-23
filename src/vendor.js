@@ -3,6 +3,7 @@ import 'expose-loader?$!jquery'
 import 'expose-loader?TWEEN!tween.js'
 
 import 'OBJLoader'
+import 'ColladaLoader'
 
 import 'SSAOShader'
 import 'CopyShader'

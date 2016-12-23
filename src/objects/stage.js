@@ -19,13 +19,13 @@ class Stage extends THREE.Group {
 
 		// plate
 		{
-			let geom = assets.obj.ground.children[1].geometry
+			let geom = assets.model.ground.children[1].geometry
 			this.plate = new THREE.Mesh(geom, surfaceMat)
 			this.add(this.plate)
 		}
 
 		// stem
-		let tree = assets.obj.tree
+		let tree = assets.model.tree
 		{
 			let geom = tree.children[1].geometry
 			let mat = new THREE.MeshLambertMaterial({
@@ -63,10 +63,6 @@ class Stage extends THREE.Group {
 		controller.on('first-reset', () => {
 			this.remove(this.plate, this.stem)
 		})
-	}
-
-	update() {
-		this.leafManager.update()
 	}
 }
 

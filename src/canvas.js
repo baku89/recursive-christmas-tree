@@ -30,12 +30,14 @@ export default class Canvas {
 		})
 
 		// start frame
+		this.clock = new THREE.Clock()
 		this.render = this.render.bind(this)
 		this.render()
 	}
 
 	initScene() {
 		this.scene = new THREE.Scene()
+		// window.scene = this.scene
 
 		// camera
 		this.cameraRig = require('./camera-rig').default
@@ -109,15 +111,14 @@ export default class Canvas {
 	}
 
 	render() {
+
 		requestAnimationFrame(this.render)
 
 		TWEEN.update()
 
 		this.cameraRig.update()
-		this.stage.update()
 
 		if (Config.ENABLE_AO) {
-
 
 			// Render depth into depthRenderTarget
 			this.scene.overrideMaterial = this.depthmaterial

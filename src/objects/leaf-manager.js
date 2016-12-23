@@ -1,5 +1,6 @@
 
 import Leaf from './leaf'
+import MovingLeaves from './moving-leaves'
 import Star from './star'
 
 let leafMatrix = new THREE.Matrix4()
@@ -47,8 +48,8 @@ class LeafManager extends THREE.Group {
 		this.star.position.copy(new THREE.Vector3(0, 15, 0).applyMatrix4(leaf.matrix))
 	}
 
-	addLeaf() {
-		let leaf = new Leaf()
+	addLeaf(type) {
+		let leaf = new MovingLeaves[type]()
 		leaf.applyMatrix(this.newMatrix)
 		this.add(leaf)
 		this.newMatrix.multiply(leafMatrix)
@@ -92,10 +93,6 @@ class LeafManager extends THREE.Group {
 		this.star.rotation.y = 0
 
 		this.newMatrix = this.originalMatrix.clone()
-	}
-
-	update() {
-
 	}
 }
 

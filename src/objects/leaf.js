@@ -1,11 +1,10 @@
-
 let treeMesh = new THREE.Mesh(
-	assets.obj.tree.children[0].geometry,
+	assets.model.tree.children[0].geometry,
 	new THREE.MeshLambertMaterial({color: Config.LEAF, wireframe: false})
 )
 
 treeMesh.scale.set(0, 0, 0)
-treeMesh.position.y = 7
+treeMesh.position.y = 3
 
 export default class Leaf extends THREE.Group {
 
@@ -25,10 +24,6 @@ export default class Leaf extends THREE.Group {
 			.easing(TWEEN.Easing.Cubic.Out)
 			.start()
 
-
-
 		this.add(this.tree)
-
-		
 	}
 }

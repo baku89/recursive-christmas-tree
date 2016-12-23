@@ -8,14 +8,16 @@ let manifest = [
 	{id: 'jingle-bell', src: './assets/jingle-bell.mp3'}
 ]
 
-let objList = {
-	ground: './assets/ground.obj',
-	tree: './assets/tree.obj'
-}
+let modelList = [
+	{id: 'ground', src: './assets/ground.obj', loader:'obj'},
+	{id: 'tree', src: './assets/tree.obj', loader:'obj'},
+	{id: 'pattern0', src: './assets/pattern0.dae', loader:'collada'},
+	{id: 'pattern1', src: './assets/pattern1.dae', loader:'collada'}
+]
 
 let assets = {
 	preload: {},
-	obj: {}
+	model: {}
 }
 
 let preloadWeight = 1.0
@@ -57,16 +59,25 @@ class Loader extends EventEmitter {
 		// load OBJ
 		console.log('loading obj...')
 
-		let total = Object.keys(objList).length
+		let total = modelList.length
 		let remaining = total
 		let objLoader = new window.THREE.OBJLoader()
+		let colladaLoader = new window.THREE.ColladaLoader()
 
-		for (let key in objList) {
+		modelList.forEach((model) => {
 
-			let path = objList[key]
+			let loader = null
 
-			objLoader.load(path, (obj) => {
-				assets.obj[key] = obj
+			if (model.loader == 'obj') {
+				loader = objLoader
+			}
+			else if (model.loader == 'collada') {
+				loader = colladaLoader
+			}
+
+			loader.load(model.src, (object) => {
+
+				assets.model[model.id] = object
 
 				let loaded = (preloadWeight + (remaining / total) * objWeight) / totalWeight
 
@@ -75,10 +86,9 @@ class Loader extends EventEmitter {
 				if (--remaining == 0) {
 					this.emit('complete')
 				}
+
 			})
-
-		}
-
+		})
 	}
 }
 
